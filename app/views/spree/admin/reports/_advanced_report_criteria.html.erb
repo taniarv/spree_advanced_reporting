@@ -1,16 +1,3 @@
-<h3><%=t "adv_report.advanced_reports"%></h3>
-<select id="report">
-<% @reports.each do |key, value| %>
-
-  <% full_path = (request.fullpath == "/admin/reports/#{key}") ? 'selected="selected" ' : '' %>
-  <% value = send("#{key}_admin_reports_url".to_sym) %>
-
-  <option <%= full_path %> value="<%= value %>">
-    <% value_name = value.is_a?(Hash) ? value[:name].downcase.gsub(" ","_") : value.split('/').last.to_s.downcase.gsub(" ","_") rescue nil %>
-    <%= t("adv_report."+value_name) rescue nil %>
-  </option>
-<% end %>
-</select>
 <div id="advanced_report_search">
   <%= form_for :search do |s| %>
     <% if @stores -%>
@@ -21,20 +8,20 @@
 
     <div id="taxon_products">
     <% if @taxons -%>
-        <%=t "taxons"%>: <br /><%= collection_select(:advanced_reporting, :taxon_id, @taxons, :id, :name, { :include_blank => 'All' } ) %><br />
+        <%=t "taxons"%>: <%= collection_select(:advanced_reporting, :taxon_id, @taxons, :id, :name, { :include_blank => 'All' } ) %>
     <% end -%>
-    <%=t :products%>:<br /><%= collection_select(:advanced_reporting, :product_id, @products, :id, :name, { :include_blank => 'All' } ) %><br />
+    <%=t :products%>: <%= collection_select(:advanced_reporting, :product_id, @products, :id, :name, { :include_blank => 'All' } ) %><br />
     </div>
 
-    <%= t("date_range") %><br />
+    <%= t("date_range") %>:
     <div class="yui-g date-range-filter">
-      <div class="yui-u sub-field first">
-        <%= s.text_field :created_at_gt , :class => 'datepicker'%><br />
+      <div class="yui-u sub-field first" style="float:left;">
         <label class="sub"><%= t("start") %></label>
+        <%= s.text_field :created_at_gt , :class => 'datepicker'%>
       </div>
-      <div class="yui-u sub-field">
-        <%= s.text_field :created_at_lt ,  :class => 'datepicker' %><br />
+      <div class="yui-u sub-field" style="float:left;">
         <label><%= t("stop") %></label>
+        <%= s.text_field :created_at_lt ,  :class => 'datepicker' %>
       </div>
     </div>
 

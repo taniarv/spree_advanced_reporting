@@ -22,3 +22,15 @@ th.headerSortDown { background-image: url(<%= asset_path 'admin/advanced_reporti
 
 ul#show_data a, #content div.links a { color: #000; font-size: 11px; font-weight: bold; }
 ul#show_data a:visited, #content div.links a:visited { font-weight: normal; color: #000; }
+
+ul#show_data {
+  display: block;
+}
+ul#show_data li {
+  display: inline-block;
+  width:10%;
+}
+ul#show_data li.selected {
+  background:#5fa5e8;
+  margin:0;
+}

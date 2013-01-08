@@ -5,7 +5,7 @@
     </div>
 <% end -%>
 
-<% content_for :sidebar do -%>
+<% content_for :table_filter do -%>
     <div class="report_details">
         <h1><%=t "adv_report." + @report.name.downcase %></h1>
         <p><%= @report.description %></p>
