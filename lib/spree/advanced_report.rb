@@ -18,19 +18,19 @@ module Spree
       self.unfiltered_params = params[:search].blank? ? {} : params[:search].clone
 
       params[:search] ||= {}
-      if params[:search][:created_at_gt].blank?
+      if params[:search][:completed_at_gt].blank?
         if (Order.count > 0) && Order.minimum(:completed_at)
-          params[:search][:created_at_gt] = Order.minimum(:completed_at).beginning_of_day
+          params[:search][:completed_at_gt] = Order.minimum(:completed_at).beginning_of_day
         end
       else
-        params[:search][:created_at_gt] = Time.zone.parse(params[:search][:created_at_gt]).beginning_of_day rescue ""
+        params[:search][:completed_at_gt] = Time.zone.parse(params[:search][:completed_at_gt]).beginning_of_day rescue ""
       end
-      if params[:search][:created_at_lt].blank?
+      if params[:search][:completed_at_lt].blank?
         if (Order.count > 0) && Order.maximum(:completed_at)
-          params[:search][:created_at_lt] = Order.maximum(:completed_at).end_of_day
+          params[:search][:completed_at_lt] = Order.maximum(:completed_at).end_of_day
         end
       else
-        params[:search][:created_at_lt] = Time.zone.parse(params[:search][:created_at_lt]).end_of_day rescue ""
+        params[:search][:completed_at_lt] = Time.zone.parse(params[:search][:completed_at_lt]).end_of_day rescue ""
       end
 
       params[:search][:completed_at_present] = "1"
@@ -63,12 +63,12 @@ module Spree
       # Above searchlogic date settings
       self.date_text = "Date Range:"
       if self.unfiltered_params
-        if self.unfiltered_params[:created_at_gt] != '' && self.unfiltered_params[:created_at_lt] != ''
-          self.date_text += " From #{self.unfiltered_params[:created_at_gt]} to #{self.unfiltered_params[:created_at_lt]}"
-        elsif self.unfiltered_params[:created_at_gt] != ''
-          self.date_text += " After #{self.unfiltered_params[:created_at_gt]}"
-        elsif self.unfiltered_params[:created_at_lt] != ''
-          self.date_text += " Before #{self.unfiltered_params[:created_at_lt]}"
+        if self.unfiltered_params[:completed_at_gt] != '' && self.unfiltered_params[:completed_at_lt] != ''
+          self.date_text += " From #{self.unfiltered_params[:completed_at_gt]} to #{self.unfiltered_params[:completed_at_lt]}"
+        elsif self.unfiltered_params[:completed_at_gt] != ''
+          self.date_text += " After #{self.unfiltered_params[:completed_at_gt]}"
+        elsif self.unfiltered_params[:completed_at_lt] != ''
+          self.date_text += " Before #{self.unfiltered_params[:completed_at_lt]}"
         else
           self.date_text += " All"
         end

@@ -17,11 +17,11 @@
     <div class="yui-g date-range-filter">
       <div class="yui-u sub-field first" style="float:left;">
         <label class="sub"><%= t("start") %></label>
-        <%= s.text_field :created_at_gt , :class => 'datepicker'%>
+        <%= s.text_field :completed_at_gt , :class => 'datepicker'%>
       </div>
       <div class="yui-u sub-field" style="float:left;">
         <label><%= t("stop") %></label>
-        <%= s.text_field :created_at_lt ,  :class => 'datepicker' %>
+        <%= s.text_field :completed_at_lt ,  :class => 'datepicker' %>
       </div>
     </div>
 
@@ -33,8 +33,8 @@
 <%= javascript_include_tag 'admin/jquery.tablesorter.min.js', 'admin/advanced_reporting.js' %>
 <%= stylesheet_link_tag 'admin/advanced_reporting' %>
 <script type="text/javascript">
-var created_at_lt = "<%= (@report.unfiltered_params && @report.unfiltered_params[:created_at_lt]) ? @report.unfiltered_params[:created_at_lt] : '' %>";
-var created_at_gt = "<%= (@report.unfiltered_params && @report.unfiltered_params[:created_at_gt]) ? @report.unfiltered_params[:created_at_gt] : '' %>";
+var completed_at_lt = "<%= (@report.unfiltered_params && @report.unfiltered_params[:completed_at_lt]) ? @report.unfiltered_params[:completed_at_lt] : '' %>";
+var completed_at_gt = "<%= (@report.unfiltered_params && @report.unfiltered_params[:completed_at_gt]) ? @report.unfiltered_params[:completed_at_gt] : '' %>";
 </script>
 <% end -%>
 
