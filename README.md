@@ -1,6 +1,10 @@
 # NOTES:
 
-This branch is for use with Spree 1.3.0 and later.
+This branch is for use with Spree 2.0 and later.
+
+2.0-related changes:
+
+1. Change Spree::Admin::ReportsController::AVAILABLE_REPORTS to Spree::Admin::ReportsController::available_reports
 
 1.3-related changes:
 
