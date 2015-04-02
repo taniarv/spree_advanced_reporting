@@ -6,8 +6,8 @@ Spree::Admin::ReportsController.class_eval do
     return if Spree::Admin::ReportsController::available_reports.has_key?(:geo_profit)
     Spree::Admin::ReportsController::available_reports.merge!(ADVANCED_REPORTS)
   end
-  I18n.locale = Rails.application.config.i18n.default_locale
-  I18n.reload!
+  # I18n.locale = Rails.application.config.i18n.default_locale
+  # I18n.reload!
 
   ADVANCED_REPORTS ||= {}
   [ :revenue, :units, :profit, :count, :top_products, :top_customers, :geo_revenue, :geo_units, :geo_profit].each do |x|
