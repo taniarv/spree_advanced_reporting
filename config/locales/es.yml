@@ -1,4 +1,4 @@
-en:
+es:
   spree:
     dashboard: "Dashboard"
     date:
@@ -7,39 +7,40 @@ en:
     date_picker:
       format: ! '%d/%m/%Y'
       js_format: 'dd/mm/yy'
+    download_csv: Descargar CSV
     report_default: Report Default
-    sales_total_description: "Sales Total"
-    sales_total: "Sales Total"
-    date_range: "Date Range:"
-    from: "From"
-    to: "to"
-    after: "After"
-    before: "Before"
-    all: "All"
+    sales_total_description: "Total de ventas"
+    sales_total: "Total de ventas"
+    date_range: "Fechas:"
+    from: "Desde"
+    to: "hasta"
+    after: "Antes"
+    before: "Despues"
+    all: "Todos"
     adv_report:
       date_display:
         daily: "%d-%m-%Y"
         monthly: "%B %Y"
         yearly: "%Y"
       increments:
-        daily: "daily"
-        weekly: "weekly"
-        monthly: "monthly"
-        quarterly: "quarterly"
-        yearly: "yearly"
-      products: Products
+        daily: "Diariamente"
+        weekly: "Semanalmente"
+        monthly: "Mensual"
+        quarterly: "Cuatrimestral"
+        yearly: "Anual"
+      products: Productos
       dashboard: Dashboard
-      daily: Daily
-      weekly: Weekly
-      monthly: Monthly
-      quarterly: Quarterly
-      yearly: Yearly
-      revenue: "Revenue"
+      daily: "Diariamente"
+      weekly: "Semanalmente"
+      monthly: "Mensual"
+      quarterly: "Cuatrimestral"
+      yearly: "Anual"
+      revenue: "Ingresos"
       revenue_description: "Revenue from completed orders in %{currency}"
-      units: "Units"
-      units_description: "Units sold"
-      profit: "Profit"
-      profit_description: "Profit from completed orders in  %{currency}"
+      units: "Unidades"
+      units_description: "Unidades vendidas"
+      profit: "Beneficio"
+      profit_description: "Beneficio from completed orders in  %{currency}"
       count: "Order Count"
       count_description: "Number of completed orders"
       top_products: "Top Products"
@@ -50,9 +51,9 @@ en:
       geo_revenue_description: "Revenue per region in %{currency}"
       geo_units: "Geo Units"
       geo_units_description: "Units sold per region"
-      geo_profit: "Geo Profit"
-      geo_profit_description: "Profit per region in  %{currency}"
-      submit: "Submit"
+      geo_profit: "Geo Beneficio"
+      geo_profit_description: "Beneficio per region in  %{currency}"
+      submit: "Enviar"
     spree:
       date_picker:
         format: ! '%d/%m/%Y'

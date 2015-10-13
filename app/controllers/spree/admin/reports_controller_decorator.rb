@@ -6,37 +6,25 @@ Spree::Admin::ReportsController.class_eval do
     return if Spree::Admin::ReportsController::available_reports.has_key?(:geo_profit)
     Spree::Admin::ReportsController::available_reports.merge!(ADVANCED_REPORTS)
   end
-  # I18n.locale = Rails.application.config.i18n.default_locale
-  # I18n.reload!
 
   ADVANCED_REPORTS ||= {}
-  [ :revenue, :units, :profit, :count, :top_products, :top_customers, :geo_revenue, :geo_units, :geo_profit].each do |x|
-    ADVANCED_REPORTS[x]= {name: I18n.t("adv_report."+x.to_s), :description => I18n.t("adv_report."+x.to_s)}
+  # [ :revenue, :units, :profit, :count, :top_products, :top_customers, :geo_revenue, :geo_units, :geo_profit]
+  [ :units, :revenue, :profit].each do |x|
+    ADVANCED_REPORTS[x]= {name: Spree.t("adv_report."+x.to_s), :description => Spree.t("adv_report."+x.to_s)}
   end
 
-   
   def basic_report_setup
     @reports = ADVANCED_REPORTS
-    @products = Spree::Product.all
-    @taxons = Spree::Taxon.all
+    @products = Spree::Product.reorder("name")
+    @taxons = Spree::Taxon.reorder("name")
     if defined?(MultiDomainExtension)
       @stores = Store.all
     end
   end
 
-  def geo_report_render(filename)
-    params[:advanced_reporting] ||= {}
-    params[:advanced_reporting]["report_type"] = params[:advanced_reporting]["report_type"].to_sym if params[:advanced_reporting]["report_type"]
-    params[:advanced_reporting]["report_type"] ||= :state
-    respond_to do |format|
-      format.html { render :template => "spree/admin/reports/geo_base" }
-      # format.pdf do
-      #   send_data @report.ruportdata[params[:advanced_reporting]['report_type']].to_pdf
-      # end
-      format.csv do
-        send_data @report.ruportdata[params[:advanced_reporting]['report_type']].to_csv
-      end
-    end
+  def units
+    @report = Spree::AdvancedReport::IncrementReport::Units.new(params)
+    base_report_render("units")
   end
 
   def base_report_top_render(filename)
@@ -74,14 +62,24 @@ Spree::Admin::ReportsController.class_eval do
     end
   end
 
+  def geo_report_render(filename)
+    params[:advanced_reporting] ||= {}
+    params[:advanced_reporting]["report_type"] = params[:advanced_reporting]["report_type"].to_sym if params[:advanced_reporting]["report_type"]
+    params[:advanced_reporting]["report_type"] ||= :state
+    respond_to do |format|
+      format.html { render :template => "spree/admin/reports/geo_base" }
+      # format.pdf do
+      #   send_data @report.ruportdata[params[:advanced_reporting]['report_type']].to_pdf
+      # end
+      format.csv do
+        send_data @report.ruportdata[params[:advanced_reporting]['report_type']].to_csv
+      end
+    end
+  end
+
   def revenue
     @report = Spree::AdvancedReport::IncrementReport::Revenue.new(params)
     base_report_render("revenue")
-  end
-
-  def units
-    @report = Spree::AdvancedReport::IncrementReport::Units.new(params)
-    base_report_render("units")
   end
 
   def profit

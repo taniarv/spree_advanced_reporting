@@ -54,26 +54,26 @@ module Spree
       end
 
       if self.product
-        self.product_text = "Product: #{self.product.name}<br />"
+        self.product_text = "#{Spree.t(:products)}: #{self.product.name}<br />"
       end
       if self.taxon
-        self.taxon_text = "Taxon: #{self.taxon.name}<br />"
+        self.taxon_text = "#{Spree.t(:taxons)}: #{self.taxon.name}<br />"
       end
 
       # Above searchlogic date settings
-      self.date_text = "Date Range:"
+      self.date_text = Spree.t(:date_range)
       if self.unfiltered_params
         if self.unfiltered_params[:completed_at_gt] != '' && self.unfiltered_params[:completed_at_lt] != ''
-          self.date_text += " From #{self.unfiltered_params[:completed_at_gt]} to #{self.unfiltered_params[:completed_at_lt]}"
+          self.date_text += " #{Spree.t(:from)} #{self.unfiltered_params[:completed_at_gt]} #{Spree.t(:to)} #{self.unfiltered_params[:completed_at_lt]}"
         elsif self.unfiltered_params[:completed_at_gt] != ''
-          self.date_text += " After #{self.unfiltered_params[:completed_at_gt]}"
+          self.date_text += " #{Spree.t(:after)} #{self.unfiltered_params[:completed_at_gt]}"
         elsif self.unfiltered_params[:completed_at_lt] != ''
-          self.date_text += " Before #{self.unfiltered_params[:completed_at_lt]}"
+          self.date_text += " #{Spree.t(:before)} #{self.unfiltered_params[:completed_at_lt]}"
         else
-          self.date_text += " All"
+          self.date_text += " #{Spree.t(:all)}"
         end
       else
-        self.date_text += " All"
+        self.date_text += " #{Spree.t(:all)}"
       end
     end
 

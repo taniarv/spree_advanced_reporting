@@ -1,31 +1,53 @@
 <div id="advanced_report_search">
-  <%= form_for :search do |s| %>
+  <%= form_for :search do |f| %>
     <% if @stores -%>
         Store:<br /><%= collection_select(:search, :store_id, @stores, :id, :name, { :include_blank => 'All' } ) %><br />
         <br>
-
     <% end -%>
 
-    <div id="taxon_products">
-    <% if @taxons -%>
-        <%=t "taxons"%>: <%= collection_select(:advanced_reporting, :taxon_id, @taxons, :id, :name, { :include_blank => 'All' } ) %>
-    <% end -%>
-    <%=t :products%>: <%= collection_select(:advanced_reporting, :product_id, @products, :id, :name, { :include_blank => 'All' } ) %><br />
-    </div>
-
-    <%= t("date_range") %>:
-    <div class="yui-g date-range-filter">
-      <div class="yui-u sub-field first" style="float:left;">
-        <label class="sub"><%= t("start") %></label>
-        <%= s.text_field :completed_at_gt , :class => 'datepicker'%>
-      </div>
-      <div class="yui-u sub-field" style="float:left;">
-        <label><%= t("stop") %></label>
-        <%= s.text_field :completed_at_lt ,  :class => 'datepicker' %>
+    <div id="taxons_products">
+      <% if @taxons -%>
+        <div class="form-group">
+          <%= f.label Spree.t(:taxons) %>
+          <%= f.collection_select :taxon_id, @taxons, :id, :name, {include_blank: true, selected: @taxon}, {class: 'form-control'} %>
+        </div>
+      <% end %>
+      <div class="form-group">
+        <%= f.label Spree.t(:products) %>
+        <%= f.collection_select :product_id, @products, :id, :name, {include_blank: true}, {class: 'form-control'} %>
       </div>
     </div>
 
-    <p><%= button t("update") %></p>
+    <div class="row">
+      <div class="yui-g date-range-filter col-md-12">
+        <div class="form-group">
+          <%= f.label Spree.t(:date_range) %>
+          <div class="row no-padding-bottom">
+            <div class="col-md-6">
+              <div class="yui-u input-group">
+                <%= f.text_field :completed_at_gt, :class => 'datepicker datepicker-from form-control', :value => params[:completed_at_gt], :placeholder => Spree.t(:start) %>
+                <span class="input-group-addon">
+                  <i class="icon icon-calendar"></i>
+                </span>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="yui-u input-group">
+                <%= f.text_field :completed_at_lt, :class => 'datepicker datepicker-to form-control', :value => params[:completed_at_lt], :placeholder => Spree.t(:stop) %>
+                <span class="input-group-addon">
+                  <i class="icon icon-calendar"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= button Spree.t(:update) %>
+    </div>
   <% end -%>
 </div>
 

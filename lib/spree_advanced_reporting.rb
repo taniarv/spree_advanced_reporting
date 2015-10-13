@@ -34,11 +34,11 @@ module Spree
 
           def html_table
             @odd = false
-            "<table class=\"tablesorter\">\n" << yield << "</table>\n"
+            "<table class=\"table tablesorter\">\n" << yield << "</table>\n"
           end
 
           def build_table_header
-            output << "\t<table class=\"tablesorter\">\n"
+            output << "\t<table class=\"table tablesorter\">\n"
             unless data.column_names.empty? || !options.show_table_headers
               output << "\t\t<thead><tr>\n\t\t\t<th>" + 
                 data.column_names.join("</th>\n\t\t\t<th>") + 
