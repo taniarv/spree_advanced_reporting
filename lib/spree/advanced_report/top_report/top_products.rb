@@ -1,10 +1,10 @@
 class Spree::AdvancedReport::TopReport::TopProducts < Spree::AdvancedReport::TopReport
   def name
-    "Top Selling Products by Revenue"
+    Spree.t('adv_report.top_products')
   end
 
   def description
-    "Top selling products, calculated by revenue"
+    Spree.t('adv_report.top_products_description')
   end
 
   def initialize(params, limit)
@@ -28,7 +28,7 @@ class Spree::AdvancedReport::TopReport::TopProducts < Spree::AdvancedReport::Top
     data.inject({}) { |h, (k, v) | h[k] = v[:revenue]; h }.sort { |a, b| a[1] <=> b [1] }.reverse[0..limit].each do |k, v|
       ruportdata << { "name" => data[k][:name], "Units" => data[k][:units], "Revenue" => data[k][:revenue] } 
     end
-    ruportdata.replace_column("Revenue") { |r| "$%0.2f" % r.Revenue }
+    ruportdata.replace_column("Revenue") { |r| Spree::Money.new(r.Revenue).to_s }
     ruportdata.rename_column("name", "Product Name")
   end
 end

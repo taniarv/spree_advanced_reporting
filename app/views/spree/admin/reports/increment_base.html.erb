@@ -18,7 +18,7 @@
   <%== @report.product_text %>
   <%== @report.taxon_text %>
   <%= @report.date_text %><br />
-  Total: <%= @report.format_total %>
+  <%= "#{Spree.total}: #{@report.format_total}" %>
 </div>
 
 <ul id="show_data" class='nav nav-pills'>

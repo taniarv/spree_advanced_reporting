@@ -1,16 +1,12 @@
 Spree::Admin::ReportsController.class_eval do
+  before_filter :set_locale
   before_filter :add_own 
   before_filter :basic_report_setup, :actions => [:profit, :revenue, :units, :top_products, :top_customers, :geo_revenue, :geo_units, :count]
 
-  def add_own
-    return if Spree::Admin::ReportsController::available_reports.has_key?(:geo_profit)
-    Spree::Admin::ReportsController::available_reports.merge!(ADVANCED_REPORTS)
-  end
-
   ADVANCED_REPORTS ||= {}
-  # [ :revenue, :units, :profit, :count, :top_products, :top_customers, :geo_revenue, :geo_units, :geo_profit]
-  [ :units, :revenue, :profit].each do |x|
-    ADVANCED_REPORTS[x]= {name: Spree.t("adv_report."+x.to_s), :description => Spree.t("adv_report."+x.to_s)}
+  # [ :revenue, :units, :profit, :count, :top_customers, :geo_revenue, :geo_units, :geo_profit]
+  [ :total_products, :top_products, :total_digitals, :units].each do |x|
+    ADVANCED_REPORTS[x]= {name: Spree.t("adv_report.#{x.to_s}"), :description => Spree.t("adv_report.#{x.to_s}_description")}
   end
 
   def basic_report_setup
@@ -19,23 +15,6 @@ Spree::Admin::ReportsController.class_eval do
     @taxons = Spree::Taxon.reorder("name")
     if defined?(MultiDomainExtension)
       @stores = Store.all
-    end
-  end
-
-  def units
-    @report = Spree::AdvancedReport::IncrementReport::Units.new(params)
-    base_report_render("units")
-  end
-
-  def base_report_top_render(filename)
-    respond_to do |format|
-      format.html { render :template => "spree/admin/reports/top_base" }
-      # format.pdf do
-      #   send_data @report.ruportdata.to_pdf
-      # end
-      format.csv do
-        send_data @report.ruportdata.to_csv
-      end
     end
   end
 
@@ -58,6 +37,43 @@ Spree::Admin::ReportsController.class_eval do
         else
           send_data @report.ruportdata[params[:advanced_reporting]['report_type']].to_csv
         end
+      end
+    end
+  end  
+
+  def base_report_total_render(filename)
+    respond_to do |format|
+      format.html { render :template => "spree/admin/reports/total_base" }
+      format.csv do
+        send_data @report.ruportdata.to_csv
+      end
+    end
+  end  
+
+  def units
+    pr params.inspect
+    @report = Spree::AdvancedReport::IncrementReport::Units.new(params)
+    base_report_render("units")
+  end
+
+  def total_digitals
+    @report = Spree::AdvancedReport::TotalReport::TotalDigitals.new(params)
+    base_report_total_render("total_digitals")
+  end
+
+  def total_products
+    @report = Spree::AdvancedReport::TotalReport::TotalProducts.new(params)
+    base_report_total_render("total_products")
+  end
+
+  def base_report_top_render(filename)
+    respond_to do |format|
+      format.html { render :template => "spree/admin/reports/top_base" }
+      # format.pdf do
+      #   send_data @report.ruportdata.to_pdf
+      # end
+      format.csv do
+        send_data @report.ruportdata.to_csv
       end
     end
   end
@@ -93,7 +109,7 @@ Spree::Admin::ReportsController.class_eval do
   end
 
   def top_products
-    @report = Spree::AdvancedReport::TopReport::TopProducts.new(params, 4)
+    @report = Spree::AdvancedReport::TopReport::TopProducts.new(params, 10)
     base_report_top_render("top_products")
   end
 
@@ -115,5 +131,15 @@ Spree::Admin::ReportsController.class_eval do
   def geo_profit
     @report = Spree::AdvancedReport::GeoReport::GeoProfit.new(params)
     geo_report_render("geo_profit")
+  end
+
+  private
+  def set_locale
+    I18n.locale ||= I18n.default_locale
+  end
+
+  def add_own
+    return if Spree::Admin::ReportsController::available_reports.has_key?(:geo_profit)
+    Spree::Admin::ReportsController::available_reports.merge!(ADVANCED_REPORTS)
   end
 end
