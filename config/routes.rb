@@ -34,6 +34,4 @@
   match '/admin/reports/total_products' => 'admin/reports#total_products',  :via  => [:get, :post],
                                                           :as   => 'total_products_admin_reports'
 
-
-  # match "/admin" => "admin/advanced_report_overview#index", :as => :admin
 end

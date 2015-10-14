@@ -15,11 +15,6 @@ module Spree
         Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*_decorator.rb")).each do |c|
           Rails.env.production? ? require(c) : load(c)
         end
-
-        # Ruport::Controller::Table.formats.merge({ :flot => MyFlotFormatter })
-        # if Mime::Type.lookup_by_extension(:pdf) != 'application/pdf'
-        #   Mime::Type.register('application/pdf', :pdf)
-        # end
         
         Ruport::Formatter::HTML.class_eval do
           # Renders individual rows for the table.

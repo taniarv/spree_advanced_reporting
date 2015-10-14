@@ -6,6 +6,14 @@ es:
     report_default: Report Default
     sales_total_description: "Importe total de ventas"
     sales_total: "Total de ventas"
+    units: "Unidades"
+    units_description: "Número total de unidades vendidos por periodo"
+    top_products: "Top10 Productos"
+    top_products_description: "Los diez productos más vendidos"
+    total_digitals: Ventas digitales
+    total_digitals_description: Total de ventas digitales por ingresos
+    total_products: Ventas totales por producto
+    total_products_description: Ventas totales en papel y digital agrupadas por producto
     date_range: "Fechas:"
     from: "Desde"
     to: "hasta"
@@ -13,14 +21,6 @@ es:
     before: "Despues"
     all: "Todos"
     adv_report:
-      units: "Unidades"
-      units_description: "Número total de unidades vendidos por periodo"
-      top_products: "Top10 Productos"
-      top_products_description: "Los diez productos más vendidos"
-      total_digitals: Ventas digitales
-      total_digitals_description: Total de ventas digitales por ingresos
-      total_products: Ventas totales por producto
-      total_products_description: Ventas totales en papel y digital agrupadas por producto
       products: Productos
       revenue: "Ingresos"
       revenue_description: "Revenue from completed orders in %{currency}"
