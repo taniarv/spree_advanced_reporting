@@ -1,10 +1,10 @@
 class Spree::AdvancedReport::TotalReport::TotalDigitals < Spree::AdvancedReport::TotalReport
   def name
-    Spree.t('adv_report.total_digitals')
+    Spree.t('total_digitals')
   end
 
   def description
-    Spree.t('adv_report.total_digitals_description')
+    Spree.t('total_digitals_description')
   end
 
   def initialize(params)
@@ -30,8 +30,8 @@ class Spree::AdvancedReport::TotalReport::TotalDigitals < Spree::AdvancedReport:
       ruportdata << { "name" => data[k][:name], "units" => data[k][:units], "revenue" => data[k][:revenue] } 
     end
     ruportdata.replace_column("revenue") { |r| Spree::Money.new(r.revenue).to_s }
-    ruportdata.rename_column("name", Spree.t('adv_report.product_name'))
-    ruportdata.rename_column("units", Spree.t('adv_report.units'))
-    ruportdata.rename_column("revenue", Spree.t('adv_report.revenue'))
+    ruportdata.rename_column("name", Spree.t('adv_report.columns.product_name'))
+    ruportdata.rename_column("units", Spree.t('adv_report.columns.units'))
+    ruportdata.rename_column("revenue", Spree.t('adv_report.columns.revenue'))
   end
 end

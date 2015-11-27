@@ -1,11 +1,15 @@
 es:
   spree:
-    total: Total  
-    dashboard: "Dashboard"
+    after: "Antes"
+    all: "Todos"
+    before: "Despues"
+    date_range: "Fechas:"
     download_csv: Descargar CSV
-    report_default: Report Default
-    sales_total_description: "Importe total de ventas"
+    from: "Desde"
+    to: "hasta"
+    total: Total  
     sales_total: "Total de ventas"
+    sales_total_description: "Importe total de ventas"
     units: "Unidades"
     units_description: "Número total de unidades vendidos por periodo"
     top_products: "Top10 Productos"
@@ -14,28 +18,21 @@ es:
     total_digitals_description: Total de ventas digitales por ingresos
     total_products: Ventas totales por producto
     total_products_description: Ventas totales en papel y digital agrupadas por producto
-    date_range: "Fechas:"
-    from: "Desde"
-    to: "hasta"
-    after: "Antes"
-    before: "Despues"
-    all: "Todos"
+    revenue: "Ingresos"
+    revenue_description: "Revenue from completed orders in %{currency}"
+    profit: "Beneficio"
+    profit_description: "Beneficio from completed orders in  %{currency}"
+    count: "Order Count"
+    count_description: "Number of completed orders"
+    top_customers: "Top Customers"
+    top_customers_description: "Top buying customers"
+    geo_revenue: "Geo Revenue"
+    geo_revenue_description: "Revenue per region in %{currency}"
+    geo_units: "Geo Units"
+    geo_units_description: "Units sold per region"
+    geo_profit: "Geo Beneficio"
+    geo_profit_description: "Beneficio per region in  %{currency}"
     adv_report:
-      products: Productos
-      revenue: "Ingresos"
-      revenue_description: "Revenue from completed orders in %{currency}"
-      profit: "Beneficio"
-      profit_description: "Beneficio from completed orders in  %{currency}"
-      count: "Order Count"
-      count_description: "Number of completed orders"
-      top_customers: "Top Customers"
-      top_customers_description: "Top buying customers"
-      geo_revenue: "Geo Revenue"
-      geo_revenue_description: "Revenue per region in %{currency}"
-      geo_units: "Geo Units"
-      geo_units_description: "Units sold per region"
-      geo_profit: "Geo Beneficio"
-      geo_profit_description: "Beneficio per region in  %{currency}"
       columns: 
         product_name: Producto
         units: Unidades
@@ -54,13 +51,3 @@ es:
         monthly: "Mensual"
         quarterly: "Cuatrimestral"
         yearly: "Anual"
-    date:
-      formats:
-        default: "%d-%m-%Y"
-    date_picker:
-      format: '%d/%m/%Y'
-      js_format: 'dd/mm/yy'
-    spree:
-      date_picker:
-        format: '%d/%m/%Y'
-        js_format: 'dd/mm/yy'

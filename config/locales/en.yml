@@ -1,22 +1,46 @@
 en:
   spree:
-    dashboard: "Dashboard"
-    date:
-      formats:
-        default: "%d-%m-%Y"
-    date_picker:
-      format: ! '%d/%m/%Y'
-      js_format: 'dd/mm/yy'
-    report_default: Report Default
-    sales_total_description: "Sales Total"
-    sales_total: "Sales Total"
+    after: "After"
+    all: "All"
+    before: "Before"
     date_range: "Date Range:"
+    download_csv: Download CSV
     from: "From"
     to: "to"
-    after: "After"
-    before: "Before"
-    all: "All"
+    total: Total  
+    sales_total: "Sales Total"
+    sales_total_description: "Sales Total"
+    revenue: "Revenue"
+    revenue_description: "Revenue from completed orders in %{currency}"
+    units: "Units"
+    units_description: "Units sold"
+    profit: "Profit"
+    profit_description: "Profit from completed orders in  %{currency}"
+    count: "Order Count"
+    count_description: "Number of completed orders"
+    top_products: "Top Products"
+    top_products_description: "Top Products sold"
+    top_customers: "Top Customers"
+    top_customers_description: "Top buying customers"
+    total_digitals: "Total Digitals"
+    total_digitals_description: "Total Digitals"
+    total_products: "Total Products"
+    total_products_description: "Total Products description"
+    geo_revenue: "Geo Revenue"
+    geo_revenue_description: "Revenue per region in %{currency}"
+    geo_units: "Geo Units"
+    geo_units_description: "Units sold per region"
+    geo_profit: "Geo Profit"
+    geo_profit_description: "Profit per region in  %{currency}"
     adv_report:
+      columns: 
+        product_name: Product
+        units: Units
+        revenue: Revenue
+        digital_units: Digital units
+        paper_units: Paper units
+        digital_revenue: Digital revenue
+        paper_revenue: Paper revenue
       date_display:
         daily: "%d-%m-%Y"
         monthly: "%B %Y"
@@ -27,33 +51,3 @@ en:
         monthly: "monthly"
         quarterly: "quarterly"
         yearly: "yearly"
-      products: Products
-      dashboard: Dashboard
-      daily: Daily
-      weekly: Weekly
-      monthly: Monthly
-      quarterly: Quarterly
-      yearly: Yearly
-      revenue: "Revenue"
-      revenue_description: "Revenue from completed orders in %{currency}"
-      units: "Units"
-      units_description: "Units sold"
-      profit: "Profit"
-      profit_description: "Profit from completed orders in  %{currency}"
-      count: "Order Count"
-      count_description: "Number of completed orders"
-      top_products: "Top Products"
-      top_products_description: "Top Products sold"
-      top_customers: "Top Customers"
-      top_customers_description: "Top buying customers"
-      geo_revenue: "Geo Revenue"
-      geo_revenue_description: "Revenue per region in %{currency}"
-      geo_units: "Geo Units"
-      geo_units_description: "Units sold per region"
-      geo_profit: "Geo Profit"
-      geo_profit_description: "Profit per region in  %{currency}"
-      submit: "Submit"
-    spree:
-      date_picker:
-        format: ! '%d/%m/%Y'
-        js_format: 'dd/mm/yy'

@@ -3,17 +3,17 @@
   <small><%= @report.description %></small>
 <% end %>
 
-<% content_for :table_filter do %>
-  <%= render :partial => 'spree/admin/reports/advanced_report_criteria', :locals => {} %>
+<% content_for :page_actions do %>
+  <%= link_to params.merge(format: :csv), :class => 'btn btn-success' do %>
+    <span class="glyphicon glyphicon-download"></span>
+    <%= Spree.t(:download_csv) %>
+  <% end %>
 <% end %>
 
-<div class="well report_details">
-  <ul class="list-unstyled">
-    <li><%= @report.taxon_text %></li>
-    <li><%= @report.product_text %></li>
-    <li><%= @report.date_text %></li>
-    <li><%= "#{Spree.t(:total)}: #{@report.format_total}" %></li>
-  </ul>
-</div>
+<% content_for :table_filter do %>
+  <%= render partial: 'spree/admin/reports/advanced_report_criteria' %>
+<% end %>
+
+<%= render partial: 'spree/admin/reports/report_details' %>
 
 <%= raw @report.ruportdata.to_html %>

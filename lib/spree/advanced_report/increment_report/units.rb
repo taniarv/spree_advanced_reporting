@@ -1,14 +1,14 @@
 class Spree::AdvancedReport::IncrementReport::Units < Spree::AdvancedReport::IncrementReport
   def name
-    Spree.t('adv_report.units')
+    Spree.t('units')
+  end
+  
+  def description
+    Spree.t('units_description')
   end
 
   def column
     "Units"
-  end
-
-  def description
-    Spree.t('adv_report.units_description')
   end
 
   def initialize(params)

@@ -1,10 +1,10 @@
 class Spree::AdvancedReport::TopReport::TopProducts < Spree::AdvancedReport::TopReport
   def name
-    Spree.t('adv_report.top_products')
+    Spree.t('top_products')
   end
 
   def description
-    Spree.t('adv_report.top_products_description')
+    Spree.t('top_products_description')
   end
 
   def initialize(params, limit)
