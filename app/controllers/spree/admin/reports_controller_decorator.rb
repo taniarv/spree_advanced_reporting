@@ -15,6 +15,8 @@ Spree::Admin::ReportsController.class_eval do
     end
     @products = Spree::Product.joins(:translations).includes(:translations).reorder("spree_product_translations.name")
     @taxons = Spree::Taxon.joins(:translations).includes(:translations).reorder("spree_taxon_translations.name")
+    @product_id = params[:search][:product_id]
+    @taxon_id = params[:search][:taxon_id]
     @completed_at_gt = params[:search][:completed_at_gt]
     @completed_at_lt = params[:search][:completed_at_lt]
     if defined?(MultiDomainExtension)

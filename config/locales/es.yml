@@ -7,7 +7,8 @@ es:
     download_csv: Descargar CSV
     from: "Desde"
     to: "hasta"
-    total: Total  
+    total: Total
+    total_units: Total unidades
     sales_total: "Total de ventas"
     sales_total_description: "Importe total de ventas"
     units: "Unidades"

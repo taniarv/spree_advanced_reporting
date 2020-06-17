@@ -17,10 +17,10 @@ $(function() {
 		});
 	});
 	if($('input#product_id').length > 0) {
-		$('select#advanced_reporting_product_id').val($('input#product_id').val());
+		$('select#search_product_id').val($('input#product_id').val());
 	}
 	if($('input#taxon_id').length > 0) {
-		$('select#advanced_reporting_taxon_id').val($('input#taxon_id').val());
+		$('select#search_taxon_id').val($('input#taxon_id').val());
 	}
 	$('div#advanced_report_search form').submit(function() {
 		$('div#advanced_report_search form').attr('action', $('select#report').val());
@@ -41,7 +41,7 @@ $(function() {
 	
 var update_report_dropdowns = function(value) {	
 	if(value.match(/\/count$/) || value.match(/\/top_products$/)) {
-		$('select#advanced_reporting_product_id,select#advanced_reporting_taxon_id').val('');
+		$('select#search_product_id,select#search_taxon_id').val('');
 		$('div#taxon_products').hide();
 	} else {
 		$('div#taxon_products').show();

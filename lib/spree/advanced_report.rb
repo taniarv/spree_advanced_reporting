@@ -3,7 +3,7 @@ module Spree
     # [ :revenue, :units, :profit, :count, :top_customers, :geo_revenue, :geo_units, :geo_profit]
     AVAILABLE_REPORTS = [:total_products, :top_products, :total_digitals, :units]
     include Ruport
-    attr_accessor :orders, :product_text, :date_text, :taxon_text, :ruportdata, :data, :params, :taxon, :product, :product_in_taxon, :unfiltered_params, :total, :total_units
+    attr_accessor :orders, :product_text, :date_text, :taxon_text, :ruportdata, :data, :params, :taxon, :taxon_id, :product, :product_id, :product_in_taxon, :unfiltered_params, :total, :total_units
 
     def name
       "Base Advanced Report"
@@ -43,34 +43,36 @@ module Spree
       self.orders = search.result
 
       self.product_in_taxon = true
-      if params[:advanced_reporting]
-        if params[:advanced_reporting][:taxon_id] && params[:advanced_reporting][:taxon_id] != ''
-          self.taxon = Taxon.find(params[:advanced_reporting][:taxon_id])
-        end
-        if params[:advanced_reporting][:product_id] && params[:advanced_reporting][:product_id] != ''
-          self.product = Product.find(params[:advanced_reporting][:product_id])
-        end
+      
+      if params[:search][:taxon_id] && params[:search][:taxon_id] != ''
+        self.taxon_id = params[:search][:taxon_id]
+        self.taxon = Taxon.find(self.taxon_id)
       end
+      if params[:search][:product_id] && params[:search][:product_id] != ''
+        self.product_id = params[:search][:product_id]
+        self.product = Product.find(self.product_id)
+      end
+      
       if self.taxon && self.product && !self.product.taxons.include?(self.taxon)
         self.product_in_taxon = false
       end
 
       if self.product
-        self.product_text = "#{Spree.t(:products)}: #{self.product.name}<br />"
+        self.product_text = "#{Spree.t(:products)}: <strong>#{self.product.name}</strong><br />"
       end
       if self.taxon
-        self.taxon_text = "#{Spree.t(:taxons)}: #{self.taxon.name}<br />"
+        self.taxon_text = "#{Spree.t(:taxons)}: <strong>#{self.taxon.name}</strong><br />"
       end
 
       # Above searchlogic date settings
       self.date_text = Spree.t(:date_range)
       if self.unfiltered_params
         if self.unfiltered_params[:completed_at_gt] != '' && self.unfiltered_params[:completed_at_lt] != ''
-          self.date_text += " #{Spree.t(:from)} #{self.unfiltered_params[:completed_at_gt]} #{Spree.t(:to)} #{self.unfiltered_params[:completed_at_lt]}"
+          self.date_text += " #{Spree.t(:from)} <strong>#{self.unfiltered_params[:completed_at_gt]}</strong> #{Spree.t(:to)} <strong>#{self.unfiltered_params[:completed_at_lt]}</strong>"
         elsif self.unfiltered_params[:completed_at_gt] != ''
-          self.date_text += " #{Spree.t(:after)} #{self.unfiltered_params[:completed_at_gt]}"
+          self.date_text += " #{Spree.t(:after)} <strong>#{self.unfiltered_params[:completed_at_gt]}</strong>"
         elsif self.unfiltered_params[:completed_at_lt] != ''
-          self.date_text += " #{Spree.t(:before)} #{self.unfiltered_params[:completed_at_lt]}"
+          self.date_text += " #{Spree.t(:before)} <strong>#{self.unfiltered_params[:completed_at_lt]}</strong>"
         else
           self.date_text += " #{Spree.t(:all)}"
         end

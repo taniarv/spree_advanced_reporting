@@ -9,12 +9,12 @@
       <% if @taxons -%>
         <div class="form-group">
           <%= f.label Spree.t(:taxons) %>
-          <%= f.collection_select :taxon_id, @taxons, :id, :name, {include_blank: true, selected: @taxon}, {class: 'form-control'} %>
+          <%= f.select :taxon_id, options_from_collection_for_select(@taxons, :id, :name, @taxon_id), {include_blank: true}, {class: 'form-control'} %>
         </div>
       <% end %>
       <div class="form-group">
         <%= f.label Spree.t(:products) %>
-        <%= f.collection_select :product_id, @products, :id, :name, {include_blank: true}, {class: 'form-control'} %>
+        <%= f.select :product_id, options_from_collection_for_select(@products, :id, :name, @product_id), {include_blank: true}, {class: 'form-control'} %>
       </div>
     </div>
 

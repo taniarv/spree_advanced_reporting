@@ -12,8 +12,15 @@ class Spree::AdvancedReport::TotalReport::TotalDigitals < Spree::AdvancedReport:
     self.total = 0
     self.total_units = 0
 
-    Spree::LineItem.joins(:order).where(order: orders).digital.each do |li|
-      if !li.product.nil?
+    line_items = Spree::LineItem.joins(:order, :variant).includes(:variant).where(order: orders).digital
+    if self.product.present?
+      line_items = line_items.where("spree_variants.product_id = ?", self.product.id)
+    end
+    if self.taxon.present?
+      line_items = line_items.where("spree_variants.product_id IN (?)", self.taxon.product_ids)
+    end
+    line_items.find_each do |li|
+      if li.product.present?
         data[li.product.id] ||= {
           name: li.product.name.to_s,
           revenue: 0,
