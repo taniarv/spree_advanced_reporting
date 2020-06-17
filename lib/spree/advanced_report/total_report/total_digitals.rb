@@ -9,21 +9,37 @@ class Spree::AdvancedReport::TotalReport::TotalDigitals < Spree::AdvancedReport:
 
   def initialize(params)
     super(params)
-    self.total = 0  
-    orders.each do |order|
-      order.line_items.select{|a|a.digital?}.each do |li|
-        if !li.product.nil?
-          data[li.product.id] ||= {
-            :name => li.product.name.to_s,
-            :revenue => 0,
-            :units => 0
-          }
-          data[li.product.id][:revenue] += li.quantity*li.price 
-          data[li.product.id][:units] += li.quantity
-          self.total += li.quantity*li.price
-        end
+    self.total = 0
+    self.total_units = 0
+
+    Spree::LineItem.joins(:order).where(order: orders).digital.each do |li|
+      if !li.product.nil?
+        data[li.product.id] ||= {
+          name: li.product.name.to_s,
+          revenue: 0,
+          units: 0
+        }
+        data[li.product.id][:revenue] += li.quantity*li.price 
+        data[li.product.id][:units] += li.quantity
+        self.total += li.quantity*li.price
+        self.total_units += li.quantity
       end
     end
+
+    # orders.each do |order|
+    #   order.line_items.select{|a|a.digital?}.each do |li|
+    #     if !li.product.nil?
+    #       data[li.product.id] ||= {
+    #         name: li.product.name.to_s,
+    #         revenue: 0,
+    #         units: 0
+    #       }
+    #       data[li.product.id][:revenue] += li.quantity*li.price 
+    #       data[li.product.id][:units] += li.quantity
+    #       self.total += li.quantity*li.price
+    #     end
+    #   end
+    # end
 
     self.ruportdata = Table(%w[name units revenue])
     data.inject({}) { |h, (k, v) | h[k] = v[:revenue]; h }.sort { |a, b| a[1] <=> b [1] }.reverse.each do |k, v|

@@ -3,7 +3,7 @@ module Spree
     # [ :revenue, :units, :profit, :count, :top_customers, :geo_revenue, :geo_units, :geo_profit]
     AVAILABLE_REPORTS = [:total_products, :top_products, :total_digitals, :units]
     include Ruport
-    attr_accessor :orders, :product_text, :date_text, :taxon_text, :ruportdata, :data, :params, :taxon, :product, :product_in_taxon, :unfiltered_params
+    attr_accessor :orders, :product_text, :date_text, :taxon_text, :ruportdata, :data, :params, :taxon, :product, :product_in_taxon, :unfiltered_params, :total, :total_units
 
     def name
       "Base Advanced Report"

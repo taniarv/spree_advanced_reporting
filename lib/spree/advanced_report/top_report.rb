@@ -1,5 +1,5 @@
 class Spree::AdvancedReport::TopReport < Spree::AdvancedReport
   def format_total
-    nil
+    Spree::Money.new(self.total)
   end
 end

@@ -3,6 +3,7 @@
     <li><%= @report.taxon_text %></li>
     <li><%= @report.product_text %></li>
     <li><%= @report.date_text %></li>
+    <li><%= "Total unidades: #{@report.total_units}" %></li>
     <li><%= "#{Spree.t(:total)}: #{@report.format_total}" %></li>
   </ul>
 </div>

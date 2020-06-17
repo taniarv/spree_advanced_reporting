@@ -9,33 +9,33 @@ class Spree::AdvancedReport::TotalReport::TotalProducts < Spree::AdvancedReport:
 
   def initialize(params)
     super(params)
-    self.total = 0  
-    orders.each do |order|
-      order.line_items.each do |li|
-        if !li.product.nil?
-          data[li.product.id] ||= {
-            :name => li.product.name.to_s,
-            :paper_revenue => 0,
-            :paper_units => 0,
-            :digital_revenue => 0,
-            :digital_units => 0,
-            :revenue => 0,
-            :units => 0
-          }
-          if li.digital?
-            data[li.product.id][:digital_revenue] += li.quantity*li.price 
-            data[li.product.id][:digital_units] += li.quantity
-          else
-            data[li.product.id][:paper_revenue] += li.quantity*li.price 
-            data[li.product.id][:paper_units] += li.quantity
-          end
-          data[li.product.id][:revenue] += li.quantity*li.price 
-          data[li.product.id][:units] += li.quantity
-          self.total += li.quantity*li.price
+    self.total = 0
+    self.total_units = 0
+    Spree::LineItem.joins(:order, :variant).includes(:variant).where(order: orders).each do |li|
+      if !li.product.nil?
+        data[li.product.id] ||= {
+          :name => li.product.name.to_s,
+          :paper_revenue => 0,
+          :paper_units => 0,
+          :digital_revenue => 0,
+          :digital_units => 0,
+          :revenue => 0,
+          :units => 0
+        }
+        if li.digital?
+          data[li.product.id][:digital_revenue] += li.quantity*li.price 
+          data[li.product.id][:digital_units] += li.quantity
+        else
+          data[li.product.id][:paper_revenue] += li.quantity*li.price 
+          data[li.product.id][:paper_units] += li.quantity
         end
+        data[li.product.id][:revenue] += li.quantity*li.price 
+        data[li.product.id][:units] += li.quantity
+        self.total += li.quantity*li.price
+        self.total_units += li.quantity
       end
     end
-
+    
     self.ruportdata = Table(%w[name paper_units paper_revenue digital_units digital_revenue units revenue])
 
     data.inject({}) { |h, (k, v) | h[k] = v[:units]; h }.sort { |a, b| a[1] <=> b [1] }.reverse.each do |k, v|

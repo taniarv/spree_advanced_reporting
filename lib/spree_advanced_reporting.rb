@@ -35,9 +35,9 @@ module Spree
           def build_table_header
             output << "\t<table class=\"table tablesorter\">\n"
             unless data.column_names.empty? || !options.show_table_headers
-              output << "\t\t<thead><tr>\n\t\t\t<th><span>" + 
-                data.column_names.join("</span></th>\n\t\t\t<th>") + 
-                "</th>\n\t\t</tr></thead>\n"
+              output << "\t\t<thead><tr>\n\t\t\t" +
+                data.column_names.map{|a| "<th><span>" + a + "</span></th>"}.join("\n\t\t\t") +
+                "</tr></thead>\n"
             end
           end
         end

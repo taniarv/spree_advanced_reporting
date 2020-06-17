@@ -1,6 +1,7 @@
 Spree::Admin::ReportsController.class_eval do
   before_filter :set_locale
-  before_filter :basic_report_setup, :actions => [:profit, :revenue, :units, :top_products, :top_customers, :geo_revenue, :geo_units, :count]
+  before_filter :basic_report_setup, actions: [:profit, :revenue, :units, :top_products, :top_customers, 
+            :geo_revenue, :geo_units, :count, :total_digitals, :total_products]
   
   def initialize
     # sales_total not included
@@ -9,8 +10,13 @@ Spree::Admin::ReportsController.class_eval do
   end  
 
   def basic_report_setup
-    @products = Spree::Product.reorder("name")
-    @taxons = Spree::Taxon.reorder("name")
+    if params[:search].nil?
+      params[:search] = {completed_at_gt: I18n.l(7.day.ago.to_date), completed_at_lt: I18n.l(Date.today)}
+    end
+    @products = Spree::Product.joins(:translations).includes(:translations).reorder("spree_product_translations.name")
+    @taxons = Spree::Taxon.joins(:translations).includes(:translations).reorder("spree_taxon_translations.name")
+    @completed_at_gt = params[:search][:completed_at_gt]
+    @completed_at_lt = params[:search][:completed_at_lt]
     if defined?(MultiDomainExtension)
       @stores = Store.all
     end
@@ -34,7 +40,7 @@ Spree::Admin::ReportsController.class_eval do
 
   def base_report_total_render(filename)
     respond_to do |format|
-      format.html { render :template => "spree/admin/reports/total_base" }
+      format.html { render template: "spree/admin/reports/total_base" }
       format.csv do
         send_data @report.ruportdata.to_csv
       end
@@ -42,7 +48,6 @@ Spree::Admin::ReportsController.class_eval do
   end  
 
   def units
-    pr params.inspect
     @report = Spree::AdvancedReport::IncrementReport::Units.new(params)
     base_report_render("units")
   end

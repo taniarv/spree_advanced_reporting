@@ -1,7 +1,7 @@
 <div id="advanced_report_search">
   <%= form_for :search do |f| %>
     <% if @stores -%>
-        Store:<br /><%= collection_select(:search, :store_id, @stores, :id, :name, { :include_blank => 'All' } ) %><br />
+        Store:<br /><%= collection_select(:search, :store_id, @stores, :id, :name, { include_blank: 'All' } ) %><br />
         <br>
     <% end -%>
 
@@ -25,7 +25,7 @@
           <div class="row no-padding-bottom">
             <div class="col-md-6">
               <div class="yui-u input-group">
-                <%= f.text_field :completed_at_gt, :class => 'datepicker datepicker-from form-control', :value => params[:completed_at_gt], :placeholder => Spree.t(:start) %>
+                <%= f.text_field :completed_at_gt, class: 'datepicker datepicker-from form-control', value: @completed_at_gt, placeholder: Spree.t(:start), autocomplete: 'off' %>
                 <span class="input-group-addon">
                   <i class="icon icon-calendar"></i>
                 </span>
@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-6">
               <div class="yui-u input-group">
-                <%= f.text_field :completed_at_lt, :class => 'datepicker datepicker-to form-control', :value => params[:completed_at_lt], :placeholder => Spree.t(:stop) %>
+                <%= f.text_field :completed_at_lt, class: 'datepicker datepicker-to form-control', value: @completed_at_lt, placeholder: Spree.t(:stop), autocomplete: 'off' %>
                 <span class="input-group-addon">
                   <i class="icon icon-calendar"></i>
                 </span>
