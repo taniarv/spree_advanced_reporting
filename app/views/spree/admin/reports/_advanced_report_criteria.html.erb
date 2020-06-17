@@ -8,7 +8,7 @@
     <div id="taxons_products">
       <% if @taxons -%>
         <div class="form-group">
-          <%= f.label Spree.t(:taxons) %>
+          <%= f.label Spree.t(:taxonomies) %>
           <%= f.select :taxon_id, options_from_collection_for_select(@taxons, :id, :name, @taxon_id), {include_blank: true}, {class: 'form-control'} %>
         </div>
       <% end %>

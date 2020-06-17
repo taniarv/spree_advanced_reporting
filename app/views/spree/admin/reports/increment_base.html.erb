@@ -15,10 +15,10 @@
 
 <div class="report_details">
   <%= @report.description %><br />
-  <%== @report.product_text %>
-  <%== @report.taxon_text %>
-  <%= @report.date_text %><br />
-  <%= "#{Spree.t(:total)}: #{@report.format_total}" %>
+  <%=raw @report.product_text %>
+  <%=raw @report.taxon_text %>
+  <%=raw @report.date_text %><br />
+  <%=raw "#{Spree.t(:total)}: #{content_tag(:strong, @report.format_total)}" %>
 </div>
 
 <ul id="show_data" class='nav nav-pills'>

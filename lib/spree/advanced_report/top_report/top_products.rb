@@ -12,9 +12,9 @@ class Spree::AdvancedReport::TopReport::TopProducts < Spree::AdvancedReport::Top
     self.total = 0
     self.total_units = 0
 
-    Spree::LineItem.joins(:order, :variant).includes(:variant).where(order: orders).find_each do |li|
+    self.line_items.find_each do |li|
       if li.product.present?
-        data[li.product.id] ||= {
+        data[li.variant.product_id] ||= {
           :name => li.variant.name.to_s,
           :revenue => 0,
           :units => 0

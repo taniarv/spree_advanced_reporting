@@ -11,10 +11,11 @@ class Spree::AdvancedReport::TotalReport::TotalProducts < Spree::AdvancedReport:
     super(params)
     self.total = 0
     self.total_units = 0
-    Spree::LineItem.joins(:order, :variant).includes(:variant).where(order: orders).each do |li|
+    
+    self.line_items.find_each do |li|
       if !li.product.nil?
-        data[li.product.id] ||= {
-          :name => li.product.name.to_s,
+        data[li.variant.product_id] ||= {
+          :name => li.variant.name.to_s,
           :paper_revenue => 0,
           :paper_units => 0,
           :digital_revenue => 0,
@@ -23,14 +24,14 @@ class Spree::AdvancedReport::TotalReport::TotalProducts < Spree::AdvancedReport:
           :units => 0
         }
         if li.digital?
-          data[li.product.id][:digital_revenue] += li.quantity*li.price 
-          data[li.product.id][:digital_units] += li.quantity
+          data[li.variant.product_id][:digital_revenue] += li.quantity*li.price 
+          data[li.variant.product_id][:digital_units] += li.quantity
         else
-          data[li.product.id][:paper_revenue] += li.quantity*li.price 
-          data[li.product.id][:paper_units] += li.quantity
+          data[li.variant.product_id][:paper_revenue] += li.quantity*li.price 
+          data[li.variant.product_id][:paper_units] += li.quantity
         end
-        data[li.product.id][:revenue] += li.quantity*li.price 
-        data[li.product.id][:units] += li.quantity
+        data[li.variant.product_id][:revenue] += li.quantity*li.price 
+        data[li.variant.product_id][:units] += li.quantity
         self.total += li.quantity*li.price
         self.total_units += li.quantity
       end

@@ -3,7 +3,7 @@ module Spree
     # [ :revenue, :units, :profit, :count, :top_customers, :geo_revenue, :geo_units, :geo_profit]
     AVAILABLE_REPORTS = [:total_products, :top_products, :total_digitals, :units]
     include Ruport
-    attr_accessor :orders, :product_text, :date_text, :taxon_text, :ruportdata, :data, :params, :taxon, :taxon_id, :product, :product_id, :product_in_taxon, :unfiltered_params, :total, :total_units
+    attr_accessor :orders, :line_items, :product_text, :date_text, :taxon_text, :ruportdata, :data, :params, :taxon, :taxon_id, :product, :product_id, :product_in_taxon, :unfiltered_params, :total, :total_units
 
     def name
       "Base Advanced Report"
@@ -41,16 +41,19 @@ module Spree
       search = Order.search(params[:search])
       # self.orders = search.state_does_not_equal('canceled')
       self.orders = search.result
-
+      self.line_items = Spree::LineItem.joins(:order, :variant).includes(:variant).where(order: self.orders)
+    
       self.product_in_taxon = true
       
       if params[:search][:taxon_id] && params[:search][:taxon_id] != ''
         self.taxon_id = params[:search][:taxon_id]
         self.taxon = Taxon.find(self.taxon_id)
+        self.line_items = self.line_items.where("spree_variants.product_id IN (?)", self.taxon.product_ids)
       end
       if params[:search][:product_id] && params[:search][:product_id] != ''
         self.product_id = params[:search][:product_id]
         self.product = Product.find(self.product_id)
+        self.line_items = self.line_items.where("spree_variants.product_id = ?", self.product_id)
       end
       
       if self.taxon && self.product && !self.product.taxons.include?(self.taxon)
