@@ -1,7 +1,7 @@
 module Spree
   class AdvancedReport
     # [ :revenue, :units, :profit, :count, :top_customers, :geo_revenue, :geo_units, :geo_profit]
-    AVAILABLE_REPORTS = [:total_products, :top_products, :total_digitals, :units]
+    AVAILABLE_REPORTS = [:total_digitals, :total_products, :total_payment_methods, :units, :top_products]
     include Ruport
     attr_accessor :orders, :line_items, :product_text, :date_text, :taxon_text, :ruportdata, :data, :params, :taxon, :taxon_id, :product, :product_id, :product_in_taxon, :unfiltered_params, :total, :total_units
 
@@ -36,6 +36,7 @@ module Spree
       end
 
       params[:search][:completed_at_not_null] = true
+      params[:search][:payment_state_eq] = 'paid'
       params[:search][:state_not_eq] = 'canceled'
 
       search = Order.search(params[:search])

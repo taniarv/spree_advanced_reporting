@@ -1,7 +1,7 @@
 Spree::Admin::ReportsController.class_eval do
   before_filter :set_locale
   before_filter :basic_report_setup, actions: [:profit, :revenue, :units, :top_products, :top_customers, 
-            :geo_revenue, :geo_units, :count, :total_digitals, :total_products]
+            :geo_revenue, :geo_units, :count, :total_digitals, :total_products, :total_payment_methods]
   
   def initialize
     # sales_total not included
@@ -62,6 +62,11 @@ Spree::Admin::ReportsController.class_eval do
   def total_products
     @report = Spree::AdvancedReport::TotalReport::TotalProducts.new(params)
     base_report_total_render("total_products")
+  end
+
+  def total_payment_methods
+    @report = Spree::AdvancedReport::TotalReport::TotalPaymentMethods.new(params)
+    base_report_total_render("total_payment_methods")
   end
 
   def base_report_top_render(filename)

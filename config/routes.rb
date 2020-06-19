@@ -34,4 +34,6 @@
   match '/admin/reports/total_products' => 'admin/reports#total_products',  :via  => [:get, :post],
                                                           :as   => 'total_products_admin_reports'
 
+  match '/admin/reports/total_payment_methods' => 'admin/reports#total_payment_methods',  :via  => [:get, :post],
+                                                          :as   => 'total_payment_methods_admin_reports'
 end

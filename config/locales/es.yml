@@ -17,8 +17,10 @@ es:
     top_products_description: "Los diez productos más vendidos"
     total_digitals: Ventas digitales
     total_digitals_description: Total de ventas digitales por ingresos
-    total_products: Ventas totales por producto
+    total_products: Ventas por producto
     total_products_description: Ventas totales en papel y digital agrupadas por producto
+    total_payment_methods: Ventas por método de pago
+    total_payment_methods_description: Ventas totales en papel y digital agrupadas por método de pago
     revenue: "Ingresos"
     revenue_description: "Revenue from completed orders in %{currency}"
     profit: "Beneficio"
@@ -42,6 +44,8 @@ es:
         paper_units: Unidades en papel
         digital_revenue: Ingresos digital
         paper_revenue: Ingresos papel
+        payment_method_name: Método de pago
+        orders: Pedidos
       date_display:
         daily: "%d-%m-%Y"
         monthly: "%B %Y"
