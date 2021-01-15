@@ -42,7 +42,7 @@ module Spree
       search = Order.search(params[:search])
       # self.orders = search.state_does_not_equal('canceled')
       self.orders = search.result
-      self.line_items = Spree::LineItem.joins(:order, :variant).includes(:variant).where(order: self.orders)
+      self.line_items = Spree::LineItem.joins(:order).joins('INNER JOIN "spree_variants" ON "spree_variants"."id" = "spree_line_items"."variant_id"').includes(:variant).where(order: self.orders)
     
       self.product_in_taxon = true
       
