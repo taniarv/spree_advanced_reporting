@@ -12,7 +12,7 @@ class Spree::AdvancedReport::TotalReport::TotalDigitals < Spree::AdvancedReport:
     self.total = 0
     self.total_units = 0
 
-    self.line_items.digital.find_each do |li|
+    self.line_items.digital_for_reports.find_each do |li|
       if li.product.present?
         data[li.variant.product_id] ||= {
           name: li.variant.name.to_s,
