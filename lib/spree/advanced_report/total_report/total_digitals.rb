@@ -11,9 +11,9 @@ class Spree::AdvancedReport::TotalReport::TotalDigitals < Spree::AdvancedReport:
     super(params)
     self.total = 0
     self.total_units = 0
-
+    
     self.line_items.digital_for_reports.find_each do |li|
-      if li.product.present?
+      if li.variant.present? && li.product.present? 
         data[li.variant.product_id] ||= {
           name: li.variant.name.to_s,
           revenue: 0,
@@ -21,9 +21,17 @@ class Spree::AdvancedReport::TotalReport::TotalDigitals < Spree::AdvancedReport:
         }
         data[li.variant.product_id][:revenue] += li.quantity*li.price 
         data[li.variant.product_id][:units] += li.quantity
-        self.total += li.quantity*li.price
-        self.total_units += li.quantity
+      else
+        data['deleted'] ||= {
+          name: '### Eliminados ###',
+          revenue: 0,
+          units: 0
+        }
+        data['deleted'][:revenue] += li.quantity*li.price 
+        data['deleted'][:units] += li.quantity
       end
+      self.total += li.quantity*li.price
+      self.total_units += li.quantity
     end
 
     self.ruportdata = Table(%w[name units revenue])
