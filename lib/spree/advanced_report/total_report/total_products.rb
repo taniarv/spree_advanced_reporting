@@ -12,7 +12,8 @@ class Spree::AdvancedReport::TotalReport::TotalProducts < Spree::AdvancedReport:
     self.total = 0
     self.total_units = 0
     
-    self.line_items.find_each do |li|
+    # free_line_items
+    self.line_items.joins(:order).where("spree_orders.payment_total = 0").find_each do |li|
       variant = Spree::Variant.with_deleted.find(li.variant_id)
       if variant.present?
         data[variant.product_id] ||= {
@@ -28,15 +29,44 @@ class Spree::AdvancedReport::TotalReport::TotalProducts < Spree::AdvancedReport:
         if variant.digital?
           data[variant.product_id][:digital_revenue] += li.quantity*li.price 
           data[variant.product_id][:digital_units] += li.quantity
-        else
-          data[variant.product_id][:paper_revenue] += li.quantity*li.price 
-          data[variant.product_id][:paper_units] += li.quantity
+        # else
+        #   data[variant.product_id][:paper_revenue] += li.quantity*li.price 
+        #   data[variant.product_id][:paper_units] += li.quantity
+        end
+        data[variant.product_id][:revenue] += li.quantity*li.price 
+        data[variant.product_id][:units] += li.quantity
+        
+        self.total += li.quantity*li.price
+        self.total_units += li.quantity
+      end
+    end
+
+    # paid_line_items
+    self.line_items.joins(order: :payments).merge(Spree::Payment.completed).includes(order: :payments).where("spree_orders.payment_total > 0").find_each do |li|
+      variant = Spree::Variant.with_deleted.find(li.variant_id)
+      if variant.present?
+        data[variant.product_id] ||= {
+          :name => variant.name.to_s,
+          # :paper_revenue => 0,
+          # :paper_units => 0,
+          :digital_revenue => 0,
+          :digital_units => 0,
+          :revenue => 0,
+          :paypal => 0,
+          :units => 0
+        }
+        if variant.digital?
+          data[variant.product_id][:digital_revenue] += li.quantity*li.price 
+          data[variant.product_id][:digital_units] += li.quantity
+        # else
+        #   data[variant.product_id][:paper_revenue] += li.quantity*li.price 
+        #   data[variant.product_id][:paper_units] += li.quantity
         end
         data[variant.product_id][:revenue] += li.quantity*li.price 
         data[variant.product_id][:units] += li.quantity
         
         # PayPal
-        if li.order.payments.last.try(:payment_method_id).try(:eql?, 2)
+        if li.order.payments.last.payment_method_id.eql?(2)
           data[variant.product_id][:paypal] += li.quantity*li.price
         end
         self.total += li.quantity*li.price
