@@ -39,6 +39,8 @@ en:
         revenue: Revenue
         digital_units: Digital units
         paper_units: Paper units
+        paypal_units: PayPal units
+        paypal_revenue: PayPal revenue
         digital_revenue: Digital revenue
         paper_revenue: Paper revenue
       date_display:

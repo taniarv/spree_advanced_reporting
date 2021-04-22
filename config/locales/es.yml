@@ -42,7 +42,9 @@ es:
         revenue: Ingresos
         digital_units: Unidades digitales
         paper_units: Unidades en papel
+        paypal_units: Unidades PayPal
         digital_revenue: Ingresos digital
+        paypal_revenue: Ingresos PayPal
         paper_revenue: Ingresos papel
         payment_method_name: Método de pago
         orders: Pedidos
