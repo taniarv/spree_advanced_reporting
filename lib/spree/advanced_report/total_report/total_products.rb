@@ -22,8 +22,9 @@ class Spree::AdvancedReport::TotalReport::TotalProducts < Spree::AdvancedReport:
           # :paper_units => 0,
           :digital_revenue => 0,
           :digital_units => 0,
+          :paypal_revenue => 0,
+          :paypal_units => 0,
           :revenue => 0,
-          :paypal => 0,
           :units => 0
         }
         if variant.digital?
